@@ -9,24 +9,36 @@
     <body>
         <div class="container">
             <h1 class="title"> Adicionar Filme </h1>
-            <form class="card card-sm" id="adicionarFilme" name="adicionarFilme" method="POST">
-                @csrf
+            <form class="card card-sm" action="/api/filmes" id="adicionarFilme" name="adicionarFilme" method="POST">
+                @csrf <!-- Responsável por verificar o token -->
                 <div class="card-body">
                 <div class="form-group">
                     <label for="titulo">Título</label>
-                    <input class="form-control" type="text" name="titulo" id="titulo"/>
+                    <input class="form-control" type="text" name="title" id="title" value="{{ old ('title') }}"/>
+                    @error('title')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="classificacao">Classificação</label>
-                    <input class="form-control" type="text" name="classificacao" id="classificacao"/>
+                    <input class="form-control" type="text" name="rating" id="rating" value="{{ old('rating') }}"  />
+                    @error('rating')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="premios">Prêmios</label>
-                    <input class="form-control" type="text" name="premios" id="premios"/>
+                    <input class="form-control" type="text" name="awards" id="awards"/>
+                    @error('awards')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label for="duracao">Duração</label>
-                    <input class="form-control" type="text" name="duracao" id="duracao"/>
+                    <input class="form-control" type="text" name="length" id="length"/>
+                    @error('length')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
                 </div>
                 <div class="form-group">
                     <label>Data de estreia</label>
@@ -50,6 +62,24 @@
                             <?php } ?>
                         </select>
                     </div>
+                    @error('dia')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                    @error('mes')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror 
+                    @error('ano')
+                    <div class="text-danger">{{ $message }}</div>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label>Generos</label>
+                    <select class="form-control" name="genre_id">
+                        <option value="">Selecione um genero</option>
+                        @foreach($genres as $genre)
+                            <option value="{{ $genre['id'] }}">{{ $genre['name'] }}</option>
+                        @endforeach
+                    </select>
                 </div>
             </div>
             <div class="card-footer text-right">
